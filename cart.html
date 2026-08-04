@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عربة التسوق وإتمام الشراء | ANO Store</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <!-- Bootstrap 5 RTL CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+
+  <!-- FontAwesome 6 JS SVG -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"
+    crossorigin="anonymous"></script>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-light">
+
+  <!-- 0. شريط الروابط العلوي -->
+  <div class="top-info-bar">
+    <div class="container-fluid px-3 px-md-4 d-flex justify-content-between align-items-center">
+      <div>
+        <span>مرحباً بكم في ANO Store - الفروع: وسط البلد / مدينة نصر</span>
+      </div>
+      <div class="d-flex align-items-center gap-1">
+        <a href="#">من نحن</a>
+        <a href="#">سياسة الخصوصية</a>
+        <a href="#">سياسات الشحن</a>
+        <a href="maintenance.html" class="maintenance-link">
+          <i class="fa-solid fa-screwdriver-wrench me-1"></i>
+          حجز صيانة موبايل
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. الناف بار الرئيسي -->
+  <div class="header-sticky-wrapper">
+    <header class="main-white-header">
+      <div class="container-fluid px-3 px-md-4">
+        <div class="d-flex align-items-center justify-content-between gap-2">
+
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn-mobile-menu d-lg-none" type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#mobileMenuOffcanvas">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <a href="index.html" class="d-flex align-items-center">
+              <img src="images/logo.png" alt="ANO Store Logo" class="brand-logo-img"
+                onerror="this.onerror=null; this.src='https://via.placeholder.com/140x40?text=ANO+STORE';">
+            </a>
+          </div>
+
+          <div class="search-container-wrapper" id="search-wrapper">
+            <div class="ano-search-box">
+              <input type="text" id="main-search-input" placeholder="بحث في ANO Store...">
+              <button class="btn-search" type="button" id="main-search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <a href="login.html" class="header-action-btn" id="user-account-btn">
+              <i class="fa-regular fa-user text-danger"></i>
+              <span id="user-display-name">تسجيل الدخول</span>
+            </a>
+
+            <a href="cart.html" class="header-action-btn border-danger text-danger">
+              <div class="cart-icon-container">
+                <i class="fa-solid fa-bag-shopping text-danger me-1"></i>
+              </div>
+              <span class="d-none d-sm-inline">عربة التسوق</span>
+              <span class="cart-badge-count" id="cart-count">0</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- 2. محتوى عربة التسوق -->
+  <div class="container my-4 my-md-5">
+    <h4 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-cart-shopping text-danger me-2"></i> محتويات عربة التسوق
+    </h4>
+
+    <div class="row g-4">
+      <!-- جدول المنتجات -->
+      <div class="col-lg-7 col-xl-8">
+        <div class="card border-0 shadow-sm p-3 p-md-4 bg-white rounded-4">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle m-0 small">
+              <thead class="table-light">
+                <tr>
+                  <th>المنتج</th>
+                  <th>السعر</th>
+                  <th style="width: 120px;">الكمية</th>
+                  <th>الإجمالي</th>
+                  <th>حذف</th>
+                </tr>
+              </thead>
+              <tbody id="cart-items-tbody">
+                <!-- ملء المنتجات بـ JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ملخص الحساب وإتمام الشراء -->
+      <div class="col-lg-5 col-xl-4">
+        <div class="card border-0 shadow-sm p-4 bg-white rounded-4">
+          <h5 class="fw-bold border-bottom pb-2 mb-3 fs-6"><i
+              class="fa-solid fa-file-invoice-dollar me-2 text-danger"></i>ملخص الطلب وإتمام الدفع</h5>
+
+          <div class="d-flex justify-content-between mb-2 small">
+            <span class="text-muted">المجموع الفرعي:</span>
+            <strong id="cart-subtotal">0 ج.م</strong>
+          </div>
+
+          <div class="d-flex justify-content-between mb-3 border-bottom pb-2 small">
+            <span class="text-muted">مصاريف الشحن:</span>
+            <span class="text-success fw-bold">تحدد عند التواصل</span>
+          </div>
+
+          <div class="d-flex justify-content-between mb-4">
+            <strong class="fw-bold">الإجمالي الكلي:</strong>
+            <strong class="text-danger fw-bold fs-5" id="cart-total">0 ج.م</strong>
+          </div>
+
+          <form id="checkout-form">
+            <div class="mb-2">
+              <label class="form-label fw-bold small">الاسم بالكامل <span class="text-danger">*</span></label>
+              <input type="text" class="form-control form-control-sm" id="order-name" required
+                placeholder="اسم العميل الرباعي">
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label fw-bold small">رقم الهاتف <span class="text-danger">*</span></label>
+              <input type="tel" class="form-control form-control-sm" id="order-phone" required
+                placeholder="01000000000">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold small">العنوان بالتفصيل <span class="text-danger">*</span></label>
+              <textarea class="form-control form-control-sm" id="order-address" rows="2" required
+                placeholder="المحافظة - المنطقة - الشارع - رقم العمارة / أو فرع الاستلام"></textarea>
+            </div>
+
+            <!-- اختيار طريقة الدفع -->
+            <div class="mb-3">
+              <label class="form-label fw-bold small">طريقة الدفع المناسبة <span class="text-danger">*</span></label>
+              <select class="form-select form-select-sm fw-bold" id="order-payment-method" required>
+                <option value="cod">الدفع عند الاستلام (COD)</option>
+                <option value="instapay">تحويل إنستا باي (InstaPay)</option>
+                <option value="vodafone_cash">فودافون كاش (Vodafone Cash)</option>
+                <option value="etisalat_cash">اتصالات كاش (Etisalat Cash)</option>
+                <option value="fawry">فوري باي (Fawry Pay)</option>
+                <option value="branch_pickup">حجز واستلام من أحد الفروع</option>
+              </select>
+            </div>
+
+            <!-- اختيار الفرع (يظهر فقط عند اختيار الاستلام من الفرع) -->
+            <div id="branch-select-container" class="mb-3 d-none">
+              <label class="form-label fw-bold small text-danger">اختر الفرع المفضل للاستلام <span
+                  class="text-danger">*</span></label>
+              <select class="form-select form-select-sm fw-bold border-danger" id="order-branch-select">
+                <option value="مدينة السلام - تقسيم مكة">فرع مدينة السلام - تقسيم مكة</option>
+                <option value="شارع جمال عبدالناصر">فرع شارع جمال عبدالناصر</option>
+              </select>
+            </div>
+
+            <!-- صندوق تحويل الأموال وتوضيح الأرقام -->
+            <div id="payment-details-box" class="p-3 bg-light rounded-3 border mb-3 d-none">
+              <div class="small fw-bold text-danger mb-1" id="payment-instructions-title">تعليمات التحويل:</div>
+              <p class="small text-muted m-0 mb-2" id="payment-instructions-text"></p>
+            </div>
+
+            <!-- رفع صورة الإيصال الإجباري عند التحويل -->
+            <div id="receipt-upload-container" class="mb-3 d-none">
+              <label class="form-label fw-bold small text-danger">إرفاق صورة إيصال / لقطة شاشة التحويل <span
+                  class="text-danger">*</span></label>
+              <input type="file" class="form-control form-control-sm" id="receipt-file-input" accept="image/*">
+              <small class="text-muted fs-9 d-block mt-1">يرجى ارفاق صورة الإيصال لتأكيد الطلب وحجزه فوراً.</small>
+            </div>
+
+            <button type="submit" class="btn btn-ano-primary w-100 fw-bold py-2 shadow-sm rounded-pill mt-2"
+              id="btn-submit-order">
+              <i class="fa-solid fa-circle-check me-1"></i> إتمام عملية الشراء الآن
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. الفوتر -->
+  <footer class="main-footer mt-5">
+    <div class="container">
+      <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <div>جميع الحقوق محفوظة &copy; 2026 - ANO Store</div>
+        <div id="footer-user-display">
+          <a href="login.html">تسجيل الدخول</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+
+</html>

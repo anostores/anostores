@@ -1,0 +1,9 @@
+{
+    "cleanUrls": true,
+    "rewrites": [
+      { "source": "/shopping-cart", "destination": "/cart.html" },
+      { "source": "/shop", "destination": "/products.html" },
+      { "source": "/my-account", "destination": "/profile.html" },
+      { "source": "/mobile-repair", "destination": "/maintenance.html" }
+    ]
+  }
