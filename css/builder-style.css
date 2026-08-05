@@ -1,0 +1,160 @@
+/* ==========================================
+   ANO Store - Live Product Builder Styles
+   Font: Cairo
+   Theme: White, Black, Red Accent
+   ========================================== */
+
+   @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+
+   :root {
+     --ano-red: #e60023;
+     --ano-red-hover: #c4001d;
+     --ano-black: #111111;
+     --ano-dark-gray: #333333;
+     --ano-white: #ffffff;
+     --ano-light-bg: #f8f9fa;
+     --ano-border: #e2e8f0;
+     --ano-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+     --ano-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.08);
+     --ano-shadow-hover: 0 8px 22px rgba(230, 0, 35, 0.12);
+     --ano-fast-transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+   }
+   
+   body.builder-body {
+     background-color: #f1f5f9;
+     font-family: 'Cairo', sans-serif !important;
+     color: var(--ano-black);
+   }
+   
+   .builder-header {
+     background: var(--ano-white);
+     border-bottom: 2px solid var(--ano-border);
+     position: sticky;
+     top: 0;
+     z-index: 1040;
+   }
+   
+   .builder-sidebar {
+     background: var(--ano-white);
+     border-left: 1px solid var(--ano-border);
+     min-height: calc(100vh - 65px);
+   }
+   
+   .virtual-card-box {
+     background: var(--ano-white);
+     border-radius: 16px;
+     box-shadow: var(--ano-shadow-md);
+     border: 1px solid var(--ano-border);
+     padding: 24px;
+   }
+   
+   .price-card-glow {
+     background: var(--ano-white);
+     border: 1px solid var(--ano-border);
+     border-radius: 14px;
+     padding: 16px;
+     box-shadow: 0 4px 15px rgba(230, 0, 35, 0.06);
+   }
+   
+   .section-title-line {
+     border-right: 4px solid var(--ano-red);
+     padding-right: 10px;
+     font-weight: 800;
+     color: #1e293b;
+   }
+   
+   .specs-table {
+     background: var(--ano-white);
+     border-radius: 10px;
+     border: 1px solid var(--ano-border);
+     overflow: hidden;
+   }
+   
+   .specs-table tr:nth-child(even) { 
+     background-color: #f8fafc; 
+   }
+   
+   .specs-table td { 
+     padding: 8px 12px; 
+     font-size: 0.85rem; 
+   }
+   
+   .gallery-thumb-item {
+     width: 55px;
+     height: 55px;
+     border-radius: 8px;
+     border: 2px solid var(--ano-border);
+     object-fit: contain;
+     cursor: pointer;
+     transition: var(--ano-fast-transition);
+     background-color: var(--ano-white);
+   }
+   
+   .gallery-thumb-item.active, .gallery-thumb-item:hover {
+     border-color: var(--ano-red);
+     box-shadow: 0 0 8px rgba(230, 0, 35, 0.3);
+   }
+   
+   /* Custom Chic Toasts Container */
+   .toast-container-custom {
+     position: fixed;
+     top: 20px;
+     left: 50%;
+     transform: translateX(-50%);
+     z-index: 2000;
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+     width: 90%;
+     max-width: 450px;
+     pointer-events: none;
+   }
+   
+   .custom-chic-toast {
+     pointer-events: auto;
+     background: rgba(255, 255, 255, 0.95);
+     backdrop-filter: blur(12px);
+     border-radius: 14px;
+     padding: 12px 18px;
+     box-shadow: 0 10px 30px rgba(230, 0, 35, 0.15), 0 2px 8px rgba(0,0,0,0.06);
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     border: 1px solid rgba(230, 0, 35, 0.2);
+     animation: slideDownGlow 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+   }
+   
+   .custom-chic-toast.toast-error {
+     border-color: rgba(220, 38, 38, 0.3);
+     box-shadow: 0 10px 30px rgba(220, 38, 38, 0.12);
+   }
+   
+   .custom-chic-toast.toast-warning {
+     border-color: rgba(217, 119, 6, 0.3);
+     box-shadow: 0 10px 30px rgba(217, 119, 6, 0.12);
+   }
+   
+   @keyframes slideDownGlow {
+     from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+     to { opacity: 1; transform: translateY(0) scale(1); }
+   }
+   
+   .btn-ano-red-pill {
+     background-color: var(--ano-red);
+     color: #ffffff;
+     border: none;
+     font-weight: 700;
+     transition: var(--ano-fast-transition);
+   }
+   
+   .btn-ano-red-pill:hover {
+     background-color: var(--ano-red-hover);
+     color: #ffffff;
+     transform: translateY(-2px);
+     box-shadow: var(--ano-shadow-hover);
+   }
+   
+   @media (max-width: 767.98px) {
+     .virtual-card-box { padding: 15px; }
+     .builder-sidebar { min-height: auto; border-left: none; border-top: 1px solid var(--ano-border); }
+   }
