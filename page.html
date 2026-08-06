@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-window-title">جاري التحميل... | ANO Store</title>
+  
+  <link rel="icon" type="image/x-icon" href="images/favicon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <div class="top-info-bar">
+    <div class="container-fluid px-3 px-md-4 d-flex justify-content-between align-items-center">
+      <div><span>مرحباً بكم في أنو ستور | الفروع: مدينة السلام - شارع جمال عبدالناصر</span></div>
+      <div class="d-flex align-items-center gap-1">
+        <a href="page?slug=about">من نحن</a>
+        <a href="page?slug=privacy">سياسة الخصوصية</a>
+        <a href="page?slug=shipping">سياسات الشحن</a>
+        <a href="page?slug=terms">سياسة الاستخدام</a>
+        <a href="maintenance" class="maintenance-link"><i class="fa-solid fa-screwdriver-wrench me-1"></i>حجز صيانة موبايل</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-sticky-wrapper">
+    <header class="main-white-header">
+      <div class="container-fluid px-3 px-md-4">
+        <div class="navbar-custom-layout">
+          <div class="navbar-right-links d-none d-lg-flex">
+            <a class="nav-link" href="/">الرئيسية</a>
+          </div>
+          <div class="navbar-logo-centered">
+            <a href="/"><img src="images/logo.png" alt="ANO Store Logo" class="brand-logo-img no-open-tab" ondragstart="return false;"></a>
+          </div>
+          <div class="navbar-left-actions">
+            <a href="cart" class="header-action-btn"><i class="fa-solid fa-bag-shopping text-danger me-1"></i>عربة التسوق</a>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="container my-5">
+    <div class="card border-0 shadow-sm p-4 p-md-5 bg-white rounded-4 border-start border-4 border-danger">
+      <h3 class="fw-bold text-dark mb-4 border-bottom pb-3" id="dynamic-page-title">جاري تحميل المحتوى...</h3>
+      <div class="text-secondary leading-relaxed fs-6" id="dynamic-page-content">
+        <div class="text-center py-5">
+          <div class="spinner-border text-danger" role="status"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer mt-5">
+    <div class="container text-center">
+      <div>جميع الحقوق محفوظة &copy; 2026 - ANO Store</div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/page.js"></script>
+</body>
+</html>
