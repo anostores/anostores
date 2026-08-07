@@ -353,13 +353,33 @@ async function attemptAddReview(productId) {
   }
 
   try {
-    const { data: userOrders, error } = await _supabase
-      .from("orders")
-      .select("*")
-      .or(`user_id.eq.${userId},client_email.eq.${userEmail}`)
-      .eq("order_status", "delivered");
+    let deliveredOrders = [];
 
-    if (error || !userOrders || userOrders.length === 0) {
+    if (userId) {
+      const { data: ordersByUserId } = await _supabase
+        .from("orders")
+        .select("*")
+        .eq("user_id", userId)
+        .eq("order_status", "delivered");
+      
+      if (ordersByUserId && ordersByUserId.length > 0) {
+        deliveredOrders = deliveredOrders.concat(ordersByUserId);
+      }
+    }
+
+    if (userEmail) {
+      const { data: ordersByEmail } = await _supabase
+        .from("orders")
+        .select("*")
+        .eq("client_email", userEmail)
+        .eq("order_status", "delivered");
+      
+      if (ordersByEmail && ordersByEmail.length > 0) {
+        deliveredOrders = deliveredOrders.concat(ordersByEmail);
+      }
+    }
+
+    if (deliveredOrders.length === 0) {
       Swal.fire({
         icon: 'warning',
         title: 'تقييم غير متاح',
@@ -369,9 +389,16 @@ async function attemptAddReview(productId) {
       return;
     }
 
-    const hasPurchasedProduct = userOrders.some(order => {
-      if (Array.isArray(order.order_items)) {
-        return order.order_items.some(item => item.id.toString() === productId.toString());
+    const hasPurchasedProduct = deliveredOrders.some(order => {
+      let items = order.order_items || order.items;
+      if (typeof items === 'string') {
+        try { items = JSON.parse(items); } catch(e) { items = []; }
+      }
+      if (Array.isArray(items)) {
+        return items.some(item => {
+          const pId = item.id || item.product_id;
+          return pId && pId.toString() === productId.toString();
+        });
       }
       return false;
     });
@@ -390,6 +417,7 @@ async function attemptAddReview(productId) {
     openProductReviewModal(productId, userId, userName);
 
   } catch (err) {
+    console.error("Check purchase error:", err);
     Swal.fire({
       icon: 'error',
       title: 'حدث خطأ',
