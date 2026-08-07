@@ -356,38 +356,35 @@ async function attemptAddReview(productId) {
     let deliveredOrders = [];
 
     if (userId) {
-      const { data: ordersByUserId } = await _supabase
+      const { data: ordersByUserId, error: err1 } = await _supabase
         .from("orders")
-        .select("id, order_status, order_items, items")
+        .select("*")
         .eq("user_id", userId);
       
-      if (ordersByUserId && ordersByUserId.length > 0) {
+      if (!err1 && ordersByUserId) {
         deliveredOrders = deliveredOrders.concat(ordersByUserId);
       }
     }
 
     if (userEmail) {
-      const { data: ordersByEmail } = await _supabase
+      const { data: ordersByEmail, error: err2 } = await _supabase
         .from("orders")
-        .select("id, order_status, order_items, items")
+        .select("*")
         .eq("client_email", userEmail);
       
-      if (ordersByEmail && ordersByEmail.length > 0) {
+      if (!err2 && ordersByEmail) {
         deliveredOrders = deliveredOrders.concat(ordersByEmail);
       }
     }
 
-    // طباعة البيانات في الكونسول لتشخيص التركيب
-    console.log("=== DEBUG REVIEWS CHECK ===");
+    console.log("=== REVIEWS DEBUG ===");
     console.log("Target Product ID:", productId);
-    console.log("Retrieved Orders from DB:", deliveredOrders);
+    console.log("Retrieved Orders:", deliveredOrders);
 
     const successfulOrders = deliveredOrders.filter(o => {
-      const st = (o.order_status || '').toString().toLowerCase().trim();
+      const st = (o.order_status || o.status || '').toString().toLowerCase().trim();
       return st === "delivered" || st === "تم التوصيل" || st === "completed";
     });
-
-    console.log("Filtered Successful Orders:", successfulOrders);
 
     if (successfulOrders.length === 0) {
       Swal.fire({
@@ -400,11 +397,10 @@ async function attemptAddReview(productId) {
     }
 
     const hasPurchasedProduct = successfulOrders.some(order => {
-      let items = order.order_items || order.items;
+      let items = order.order_items || order.items || order.products || [];
       if (typeof items === 'string') {
         try { items = JSON.parse(items); } catch(e) { items = []; }
       }
-      console.log("Order Items parsed:", items);
 
       if (Array.isArray(items)) {
         return items.some(item => {
