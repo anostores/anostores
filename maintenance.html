@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حجز صيانة موبايل | ANO Store</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="images/favicon.png">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <!-- Bootstrap 5 RTL CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+  
+  <!-- FontAwesome 6 JS SVG -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+    <div class="top-info-bar">
+    <div class="container-fluid px-3 px-md-4 d-flex justify-content-between align-items-center">
+      <div>
+        <span>مرحباً بكم في أنو ستور   |   الفروع: مدينة السلام - شارع جمال عبدالناصر</span>
+      </div>
+      <div class="d-flex align-items-center gap-1">
+        <a href="page?slug=about">من نحن</a>
+        <a href="page?slug=privacy">سياسة الخصوصية</a>
+        <a href="page?slug=shipping">سياسات الشحن</a>
+        <a href="page?slug=terms">سياسة الاستخدام</a>
+        <a href="maintenance" class="maintenance-link">
+          <i class="fa-solid fa-screwdriver-wrench me-1"></i>
+          حجز صيانة موبايل
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-sticky-wrapper">
+    <header class="main-white-header">
+      <div class="container-fluid px-3 px-md-4">
+        <div class="navbar-custom-layout d-flex align-items-center justify-content-between">
+          
+          <div class="navbar-right-links d-none d-lg-flex align-items-center flex-grow-1" style="flex-basis: 0;">
+            <a class="nav-link text-danger" href="/">الرئيسية</a>
+            
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">الموبايلات</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="products?cat=used-phones"><i class="fa-solid fa-mobile-screen me-2"></i>موبايلات مستعملة</a></li>
+                <li><a class="dropdown-item" href="products?cat=new-phones"><i class="fa-solid fa-box-open me-2"></i>موبايلات جديدة (زيرو)</a></li>
+              </ul>
+            </div>
+
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">العطور والسبراي</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="products?cat=perfumes"><i class="fa-solid fa-spray-can-sparkles me-2"></i>برفيوم رجالي وحريمي</a></li>
+                <li><a class="dropdown-item" href="products?cat=body-splash"><i class="fa-solid fa-shower me-2"></i>بادي سبلاش رجالي وحريمي</a></li>
+                <li><a class="dropdown-item" href="products?cat=sprays"><i class="fa-solid fa-wind me-2"></i>سبراي رجالي وحريمي</a></li>
+              </ul>
+            </div>
+
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">الاكسسوارات والصوتيات</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="products?cat=handsfree"><i class="fa-solid fa-headphones-simple me-2"></i>سماعات هاند فري</a></li>
+                <li><a class="dropdown-item" href="products?cat=headphones"><i class="fa-solid fa-headphones me-2"></i>هيدفون</a></li>
+                <li><a class="dropdown-item" href="products?cat=airpods"><i class="fa-solid fa-ear-listen me-2"></i>ايربودز</a></li>
+                <li><a class="dropdown-item" href="products?cat=speakers"><i class="fa-solid fa-compact-disc me-2"></i>صبات وسماعات كبيرة</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="products?cat=cases"><i class="fa-solid fa-mobile me-2"></i>جرابات أندرويد وآيفون</a></li>
+                <li><a class="dropdown-item" href="products?cat=chargers"><i class="fa-solid fa-plug me-2"></i>شواحن ووصلات شحن</a></li>
+                <li><a class="dropdown-item" href="products?cat=watch-straps"><i class="fa-solid fa-clock me-2"></i>ستراب للسمارت ووتش</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <button class="btn-mobile-menu d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenuOffcanvas">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="navbar-logo-centered text-center flex-grow-1" style="flex-basis: 0;">
+            <a href="/" class="d-inline-block">
+              <img src="images/logo.png" alt="ANO Store Logo" class="brand-logo-img no-open-tab" ondragstart="return false;" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x50?text=ANO+STORE';">
+            </a>
+          </div>
+
+          <div class="navbar-left-actions d-flex align-items-center justify-content-end flex-grow-1" style="flex-basis: 0;">
+            
+            <button class="btn-header-icon" id="trigger-search-btn" type="button" title="البحث في المتجر">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+
+            <a href="login" class="header-action-btn" id="user-account-btn">
+              <i class="fa-regular fa-user text-danger"></i>
+              <span id="user-display-name">تسجيل الدخول</span>
+            </a>
+
+            <a href="cart" class="header-action-btn">
+              <div class="cart-icon-container">
+                <i class="fa-solid fa-bag-shopping text-danger me-1"></i>
+              </div>
+              <span class="d-none d-sm-inline">عربة التسوق</span>
+              <span class="cart-badge-count" id="cart-count">0</span>
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="animated-search-overlay" id="animated-search-overlay">
+        <button type="button" class="btn-close-search" id="btn-close-search" title="إغلاق البحث">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="animated-search-box">
+          <input type="text" id="animated-search-input" placeholder="اكتب اسم المنتج أو القسم للبحث الحسي الفوري في ANO Store...">
+          <button class="btn-search-submit" type="button" id="btn-search-submit">
+            بحث <i class="fa-solid fa-arrow-left ms-1"></i>
+          </button>
+        </div>
+      </div>
+
+    </header>
+  </div>
+
+  <div class="offcanvas offcanvas-start mobile-offcanvas-theme" tabindex="-1" id="mobileMenuOffcanvas" style="width: 78%;">
+    <div class="offcanvas-header bg-black text-white border-bottom border-danger">
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge bg-danger">ANO Store</span>
+        <h6 class="m-0 fw-bold">القائمة الرئيسية</h6>
+      </div>
+      <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-3">
+      <ul class="mobile-menu-list list-unstyled d-flex flex-column gap-2">
+        <li><a class="nav-link-mobile text-danger fw-bold d-block p-2 rounded bg-light" href="/"><i class="fa-solid fa-house me-2"></i> الرئيسية</a></li>
+        <li><a class="nav-link-mobile d-block p-2" href="products?cat=used-phones"><i class="fa-solid fa-mobile-screen me-2"></i> موبايلات مستعملة</a></li>
+        <li><a class="nav-link-mobile d-block p-2" href="products?cat=new-phones"><i class="fa-solid fa-box-open me-2"></i> موبايلات جديدة (زيرو)</a></li>
+        <li><a class="nav-link-mobile d-block p-2" href="products?cat=perfumes"><i class="fa-solid fa-spray-can-sparkles me-2"></i> العطور والبادي سبلاش</a></li>
+        <li><a class="nav-link-mobile d-block p-2" href="products?cat=airpods"><i class="fa-solid fa-headphones me-2"></i> الاكسسوارات والصوتيات</a></li>
+        <li><a class="nav-link-mobile d-block p-2 text-danger fw-bold" href="products?cat=offers"><i class="fa-solid fa-percent me-2"></i> عروض وخصومات خاصة</a></li>
+        <li><hr class="border-secondary"></li>
+        <li><a class="nav-link-mobile text-danger fw-bold d-block p-2" href="maintenance"><i class="fa-solid fa-screwdriver-wrench me-2"></i> حجز صيانة موبايل</a></li>
+        <li><a class="nav-link-mobile d-block p-2" href="login"><i class="fa-regular fa-user me-2"></i> حسابي / تسجيل الدخول</a></li>
+      </ul>
+
+      <div class="mt-4 p-3 rounded-3 bg-light border text-center">
+        <small class="text-muted d-block mb-1">الدعم والطلب السريع عبر الواتساب</small>
+        <a href="https://wa.me/201111610098" target="_blank" class="btn btn-sm btn-danger w-100 fw-bold">
+          <i class="fa-brands fa-whatsapp me-1"></i> تواصل معنا مباشرة
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. قسم نموذج حجز الصيانة -->
+  <section class="container my-4 my-md-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+          <div class="text-center mb-4">
+            <div class="d-inline-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger rounded-circle p-3 mb-2">
+              <i class="fa-solid fa-screwdriver-wrench fa-2x"></i>
+            </div>
+            <h3 class="fw-bold">احجز ميعاد صيانة موبايلك أونلاين</h3>
+            <p class="text-muted fs-6">اكتب بياناتك والعُطل والميعاد المناسب، ولما يتم تأكيد طلبك تشرفنا في المحل مباشرة!</p>
+          </div>
+
+          <form id="maintenance-booking-form">
+            <div class="row g-3">
+              
+              <!-- اسم العميل -->
+              <div class="col-md-6">
+                <label class="form-label fw-bold small">الاسم بالكامل <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="client-name" placeholder="أدخل اسمك الكريم" required>
+              </div>
+
+              <!-- رقم الهاتف -->
+              <div class="col-md-6">
+                <label class="form-label fw-bold small">رقم الموبايل (للتأكيد والواتساب) <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="client-phone" placeholder="01000000000" required>
+              </div>
+
+              <!-- موديل الجهاز -->
+              <div class="col-md-6">
+                <label class="form-label fw-bold small">نوع وموديل الموبايل <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="device-model" placeholder="مثال: iPhone 13 Pro أو Samsung S22" required>
+              </div>
+
+              <!-- الفرع المفضل -->
+              <div class="col-md-6">
+                <label class="form-label fw-bold small">اختر الفرع المناسب لك <span class="text-danger">*</span></label>
+                <select class="form-select fw-bold" id="branch-location" required>
+                  <option value="" selected disabled>اختر الفرع</option>
+                  <option value="مدينة السلام - تقسيم مكة">فرع مدينة السلام - تقسيم مكة</option>
+                  <option value="شارع جمال عبدالناصر">فرع شارع جمال عبدالناصر</option>
+                </select>
+              </div>
+
+              <!-- التاريخ المطلوب -->
+              <div class="col-md-6">
+                <label class="form-label fw-bold small">تاريخ الزيارة <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" id="preferred-date" required>
+              </div>
+
+              <!-- الوقت المطلوب -->
+              <div class="col-md-6">
+                <label class="form-label fw-bold small">الوقت المناسب <span class="text-danger">*</span></label>
+                <input type="time" class="form-control" id="preferred-time" required>
+              </div>
+
+              <!-- وصف العطل -->
+              <div class="col-12">
+                <label class="form-label fw-bold small">تفاصيل العُطل والمشكلة <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="issue-description" rows="4" placeholder="اشرح لنا المشكلة بالتفصيل (مثال: تغيير شاشة، الموبايل مش بيشحن، تغيير بطارية...)" required></textarea>
+              </div>
+
+              <!-- زر الإرسال -->
+              <div class="col-12 mt-4 text-center">
+                <button type="submit" class="btn btn-ano-primary btn-lg w-100 rounded-pill py-2 shadow-sm" id="btn-submit-maintenance">
+                  <i class="fa-solid fa-paper-plane me-2"></i> إرسال طلب حجز الصيانة
+                </button>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+    <footer class="main-footer">
+    <div class="container">
+      <div class="row g-4">
+        
+        <div class="col-md-3">
+          <img src="images/full-white-transparent.png" alt="ANO Store Logo" class="brand-logo-img mb-3 no-open-tab" ondragstart="return false;" onerror="this.onerror=null; this.src='https://via.placeholder.com/180x50?text=ANO+STORE';">
+          <p class="text-secondary">
+            متجر ANO Store هو وجهتك الأولى لشراء الموبايلات الجديدة والمستعملة المضمونة، بجانب أفضل تشكيلة عطور واكسسوارات.
+          </p>
+        </div>
+
+        <div class="col-md-2 col-6">
+          <h6>روابط سريعة</h6>
+          <a href="page?slug=about">من نحن</a>
+          <a href="page?slug=privacy">سياسة الخصوصية</a>
+          <a href="page?slug=shipping">سياسات الشحن</a>
+          <a href="page?slug=terms">شروط الاستخدام</a>
+        </div>
+
+        <div class="col-md-2 col-6">
+          <h6>المنتجات</h6>
+          <a href="products?cat=offers" class="text-danger fw-bold">عروض وخصومات</a>
+          <a href="products?cat=used-phones">موبايلات مستعملة</a>
+          <a href="products?cat=new-phones">موبايلات جديدة</a>
+          <a href="products?cat=perfumes">العطور والسبراي</a>
+        </div>
+
+        <div class="col-md-2 col-6">
+          <h6>الاكسسوارات</h6>
+          <a href="products?cat=airpods">سماعات وايربودز</a>
+          <a href="products?cat=cases">جرابات الموبايل</a>
+          <a href="products?cat=chargers">شواحن وصلات</a>
+          <a href="products?cat=watch-straps">ستراب ساعة</a>
+        </div>
+
+        <div class="col-md-3">
+          <h6>فروعنا وخدمة العملاء</h6>
+          <p class="m-0 mb-1">الفرع الأول: مدينة السلام - شارع جمال عبدالناصر</p>
+          <p class="m-0 text-danger fw-bold">الدعم والواتساب: 01115141122</p>
+          <p class="m-0 text-danger fw-bold">الدعم والواتساب: 01111757936</p>          
+          <p class="m-0 text-danger fw-bold">الدعم والواتساب: 01111610098</p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <div>جميع الحقوق محفوظة &copy; 2026 - ANO Store</div>
+        <div id="footer-user-display" class="d-flex gap-3">
+          <a href="maintenance">خدمة الصيانة</a>
+          <a href="login">تسجيل الدخول</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Supabase SDK CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Configs & Scripts -->
+  <script src="js/supabase-config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/maintenance.js"></script>
+</body>
+</html>
