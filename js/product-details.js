@@ -377,9 +377,17 @@ async function attemptAddReview(productId) {
       }
     }
 
-    const successfulOrders = deliveredOrders.filter(o => 
-      o.order_status === "delivered" || o.order_status === "تم التوصيل"
-    );
+    // طباعة البيانات في الكونسول لتشخيص التركيب
+    console.log("=== DEBUG REVIEWS CHECK ===");
+    console.log("Target Product ID:", productId);
+    console.log("Retrieved Orders from DB:", deliveredOrders);
+
+    const successfulOrders = deliveredOrders.filter(o => {
+      const st = (o.order_status || '').toString().toLowerCase().trim();
+      return st === "delivered" || st === "تم التوصيل" || st === "completed";
+    });
+
+    console.log("Filtered Successful Orders:", successfulOrders);
 
     if (successfulOrders.length === 0) {
       Swal.fire({
@@ -396,10 +404,12 @@ async function attemptAddReview(productId) {
       if (typeof items === 'string') {
         try { items = JSON.parse(items); } catch(e) { items = []; }
       }
+      console.log("Order Items parsed:", items);
+
       if (Array.isArray(items)) {
         return items.some(item => {
-          const pId = item.id || item.product_id;
-          return pId && pId.toString() === productId.toString();
+          const pId = item.id || item.product_id || item.productId;
+          return pId && pId.toString().trim() === productId.toString().trim();
         });
       }
       return false;
