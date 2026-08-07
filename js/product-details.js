@@ -358,9 +358,8 @@ async function attemptAddReview(productId) {
     if (userId) {
       const { data: ordersByUserId } = await _supabase
         .from("orders")
-        .select("*")
-        .eq("user_id", userId)
-        .eq("order_status", "delivered");
+        .select("id, order_status, order_items, items")
+        .eq("user_id", userId);
       
       if (ordersByUserId && ordersByUserId.length > 0) {
         deliveredOrders = deliveredOrders.concat(ordersByUserId);
@@ -370,16 +369,19 @@ async function attemptAddReview(productId) {
     if (userEmail) {
       const { data: ordersByEmail } = await _supabase
         .from("orders")
-        .select("*")
-        .eq("client_email", userEmail)
-        .eq("order_status", "delivered");
+        .select("id, order_status, order_items, items")
+        .eq("client_email", userEmail);
       
       if (ordersByEmail && ordersByEmail.length > 0) {
         deliveredOrders = deliveredOrders.concat(ordersByEmail);
       }
     }
 
-    if (deliveredOrders.length === 0) {
+    const successfulOrders = deliveredOrders.filter(o => 
+      o.order_status === "delivered" || o.order_status === "تم التوصيل"
+    );
+
+    if (successfulOrders.length === 0) {
       Swal.fire({
         icon: 'warning',
         title: 'تقييم غير متاح',
@@ -389,7 +391,7 @@ async function attemptAddReview(productId) {
       return;
     }
 
-    const hasPurchasedProduct = deliveredOrders.some(order => {
+    const hasPurchasedProduct = successfulOrders.some(order => {
       let items = order.order_items || order.items;
       if (typeof items === 'string') {
         try { items = JSON.parse(items); } catch(e) { items = []; }
