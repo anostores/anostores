@@ -30,16 +30,16 @@ async function loadProductDetails(identifier) {
 
   try {
     let product = null;
-    const cleanIdentifier = decodeURIComponent(identifier);
+    const cleanIdentifier = decodeURIComponent(identifier).trim();
+    const isNumericId = /^\d+$/.test(cleanIdentifier) || /^[0-9a-fA-F-]{36}$/.test(cleanIdentifier);
 
-    const { data: idData } = await _supabase
-      .from("products")
-      .select("*")
-      .eq("id", cleanIdentifier)
-      .maybeSingle();
-
-    if (idData) {
-      product = idData;
+    if (isNumericId) {
+      const { data: idData } = await _supabase
+        .from("products")
+        .select("*")
+        .eq("id", cleanIdentifier)
+        .maybeSingle();
+      if (idData) product = idData;
     } else {
       const { data: slugData } = await _supabase
         .from("products")
@@ -47,7 +47,17 @@ async function loadProductDetails(identifier) {
         .eq("slug", cleanIdentifier)
         .maybeSingle();
 
-      if (slugData) product = slugData;
+      if (slugData) {
+        product = slugData;
+      } else {
+        const { data: titleData } = await _supabase
+          .from("products")
+          .select("*")
+          .ilike("title", `%${cleanIdentifier}%`)
+          .limit(1)
+          .maybeSingle();
+        if (titleData) product = titleData;
+      }
     }
 
     if (!product) {
