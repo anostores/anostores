@@ -26,11 +26,7 @@ async function checkMaintenanceMode() {
       .maybeSingle();
 
     if (data?.value?.is_enabled) {
-      const isLocalOrGithub = window.location.protocol === 'file:' || 
-                              window.location.hostname.includes('github.io');
-      
-      const targetMaintenanceUrl = isLocalOrGithub ? "under-maintenance" : "/under-maintenance";
-      window.location.href = targetMaintenanceUrl;
+      window.location.href = "under-maintenance";
     }
   } catch (err) {
     console.error("Maintenance Check Error:", err);
@@ -42,7 +38,7 @@ async function recordAnalyticsVisit() {
 
   try {
     const { data: { session } } = await _supabase.auth.getSession();
-    const currentPath = window.location.pathname || "/";
+    const currentPath = window.location.pathname || "./";
 
     await _supabase.from("site_analytics").insert([{
       page_path: currentPath,
@@ -123,12 +119,12 @@ function renderHeroSliderHtml(slides) {
   const sliderInner = document.getElementById("hero-slider-dynamic-inner");
   if (!sliderInner) return;
 
-  const isLocalOrGithub = window.location.protocol === 'file:' || 
-                          window.location.hostname.includes('github.io');
-
   sliderInner.innerHTML = slides.map((slide, index) => {
     const activeClass = index === 0 ? "active" : "";
-    let slideLink = slide.link_url || slide.target_url || (isLocalOrGithub ? "products" : "/products");
+    let slideLink = slide.link_url || slide.target_url || "products";
+    if (slideLink.endsWith(".html")) {
+      slideLink = slideLink.replace(".html", "");
+    }
     
     if (slide.image_url) {
       return `
@@ -246,12 +242,7 @@ function initAnimatedSearch() {
 
 function executeSearch(query) {
   if (query) {
-    const isLocalOrGithub = window.location.protocol === 'file:' || 
-                            window.location.hostname.includes('github.io');
-    const targetUrl = isLocalOrGithub 
-      ? `products?search=${encodeURIComponent(query)}` 
-      : `/products?search=${encodeURIComponent(query)}`;
-    window.location.href = targetUrl;
+    window.location.href = `products?search=${encodeURIComponent(query)}`;
   }
 }
 
@@ -259,9 +250,6 @@ async function checkUserSession() {
   const userDisplayName = document.getElementById("user-display-name");
   const userActionLink = userDisplayName ? userDisplayName.closest("a") : null;
   const footerUserDisplay = document.getElementById("footer-user-display");
-
-  const isLocalOrGithub = window.location.protocol === 'file:' || 
-                          window.location.hostname.includes('github.io');
 
   let loggedInUserName = null;
   let isSessionValid = false;
@@ -285,7 +273,7 @@ async function checkUserSession() {
     userDisplayName.innerText = loggedInUserName;
 
     if (userActionLink) {
-      userActionLink.href = isLocalOrGithub ? "profile" : "/profile";
+      userActionLink.href = "profile";
       userActionLink.title = "عرض الملف الشخصي وتتبع الطلبات";
     }
 
@@ -314,7 +302,7 @@ async function checkUserSession() {
           timer: 1000,
           showConfirmButton: false
         }).then(() => {
-          window.location.href = isLocalOrGithub ? "index" : "/";
+          window.location.href = "./";
         });
       });
 
@@ -322,15 +310,14 @@ async function checkUserSession() {
     }
 
     if (footerUserDisplay) {
-      const profilePath = isLocalOrGithub ? "profile" : "/profile";
-      footerUserDisplay.innerHTML = `<a href="${profilePath}" class="text-danger fw-bold"><i class="fa-regular fa-user me-1"></i>${loggedInUserName} (حسابي)</a>`;
+      footerUserDisplay.innerHTML = `<a href="profile" class="text-danger fw-bold"><i class="fa-regular fa-user me-1"></i>${loggedInUserName} (حسابي)</a>`;
     }
   } else {
     if (userDisplayName) {
       userDisplayName.innerText = "تسجيل الدخول";
     }
     if (userActionLink) {
-      userActionLink.href = isLocalOrGithub ? "login" : "/login";
+      userActionLink.href = "login";
       userActionLink.title = "تسجيل الدخول أو إنشاء حساب جديد";
     }
 
@@ -340,11 +327,9 @@ async function checkUserSession() {
     }
 
     if (footerUserDisplay) {
-      const loginPath = isLocalOrGithub ? "login" : "/login";
-      const maintPath = isLocalOrGithub ? "maintenance" : "/maintenance";
       footerUserDisplay.innerHTML = `
-        <a href="${maintPath}">خدمة الصيانة</a>
-        <a href="${loginPath}">تسجيل الدخول</a>
+        <a href="maintenance">خدمة الصيانة</a>
+        <a href="login">تسجيل الدخول</a>
       `;
     }
   }
@@ -363,14 +348,10 @@ function createProductCard(product) {
   const oldPrice = product.original_price ? Number(product.original_price) : 0;
   const discountPercent = oldPrice > price ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
   const image = (product.images && product.images[0]) ? product.images[0] : 'https://via.placeholder.com/300x300?text=ANO+Store';
-  
-  const isLocalOrGithub = window.location.protocol === 'file:' || 
-                          window.location.hostname.includes('github.io');
 
-  const slugTitle = product.slug || encodeURIComponent(product.title.replace(/\s+/g, '-'));
-  const productLink = isLocalOrGithub
-    ? (product.slug ? `product-details?slug=${product.slug}` : `product-details?id=${product.id}`)
-    : `/product/${slugTitle}`;
+  const productLink = product.slug 
+    ? `product-details?slug=${encodeURIComponent(product.slug)}` 
+    : `product-details?id=${product.id}`;
 
   return `
     <div class="col-6 col-md-4 col-lg-3 mb-3">
